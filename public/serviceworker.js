@@ -1,9 +1,8 @@
 const CACHE_NAME = 'version-1'
 const urlsToCache = ['index.html', 'offline.html']
-
 const self = this
 
-// Install SW
+// Install the service worker
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
@@ -23,11 +22,10 @@ self.addEventListener('fetch', (event) => {
   )
 })
 
-// Activate the SW
+// Activate the service worker
 self.addEventListener('activate', (event) => {
   const cacheWhitelist = []
   cacheWhitelist.push(CACHE_NAME)
-
   event.waitUntil(
     caches.keys().then((cacheNames) =>
       Promise.all(

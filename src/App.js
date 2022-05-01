@@ -19,7 +19,7 @@ const App = () => {
       <input
         type="text"
         className="search"
-        placeholder="search..."
+        placeholder="i.e Rabat ..."
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         onKeyPress={search}
