@@ -1,3 +1,3 @@
 # Progressive Web App
 
-### link =>
+### link => https://pwa-weather-store.netlify.app
