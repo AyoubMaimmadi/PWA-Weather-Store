@@ -1,37 +1,42 @@
-const CASH_NAME = 'Version-1'
+const CACHE_NAME = 'version-1'
 const urlsToCache = ['index.html', 'offline.html']
 
 const self = this
 
-// Install service worker
-self.addEventListener('install', function (event) {
+// Install SW
+self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CASH_NAME).then(function (cache) {
+    caches.open(CACHE_NAME).then((cache) => {
+      console.log('Opened cache')
+
       return cache.addAll(urlsToCache)
     })
   )
 })
 
 // Listen for requests
-self.addEventListener('fetch', function (event) {
+self.addEventListener('fetch', (event) => {
   event.respondWith(
-    caches.match(event.request).then(function (response) {
-      return response || fetch(event.request)
+    caches.match(event.request).then(() => {
+      return fetch(event.request).catch(() => caches.match('offline.html'))
     })
   )
 })
 
-// Activate service worker
-self.addEventListener('activate', function (event) {
+// Activate the SW
+self.addEventListener('activate', (event) => {
+  const cacheWhitelist = []
+  cacheWhitelist.push(CACHE_NAME)
+
   event.waitUntil(
-    caches.keys().then(function (cacheNames) {
-      return Promise.all(
-        cacheNames.map(function (cacheName) {
-          if (cacheName !== CASH_NAME) {
+    caches.keys().then((cacheNames) =>
+      Promise.all(
+        cacheNames.map((cacheName) => {
+          if (!cacheWhitelist.includes(cacheName)) {
             return caches.delete(cacheName)
           }
         })
       )
-    })
+    )
   )
 })
