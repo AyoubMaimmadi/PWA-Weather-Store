@@ -16,4 +16,4 @@ To use you need to:
 
 ##### - `npm or yarn start` to open developement at localhost:3000
 
-#### Try it => https://pwa-weather-store.netlify.app
+#### Try it => https://pwa-weather-store.vercel.app
